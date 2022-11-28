@@ -7,6 +7,7 @@ import axios from 'axios'
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import 'element-plus/theme-chalk/index.css';
+import Notifications from '@kyvg/vue3-notification';
 
 import "./axios"
 
@@ -19,4 +20,5 @@ app.config.globalProperties.$axios=axios
 app.use(store)
     .use(router)
     .use(ElementPlus)
+    .use(Notifications)
     .mount('#app')

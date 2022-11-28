@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue';
 import Summary from "@/views/Summary";
-import Login from "@/views/Login";
+import Loggedin from "@/views/Loggedin";
 import Signup from "@/views/Signup";
-import UserInfoStore from '../app/user-info-store';
-import UserInfoApi from '../app/user-info-api';
-import auth from '../app/auth';
+import Loggedout from "@/views/Loggedout";
+
 const routes = [
   {
     path: '/',
@@ -19,8 +18,13 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
-    component: Login
+    name: 'Loggedin',
+    component: Loggedin
+  },
+  {
+    path: '/logout',
+    name: 'Loggedout',
+    component: Loggedout
   },
   {
     path: '/signup',

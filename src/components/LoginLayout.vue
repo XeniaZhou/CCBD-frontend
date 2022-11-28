@@ -1,6 +1,6 @@
 <template>
   <el-col :span="2" :offset="10">
-    <button type="button" @click="tryLogout" style="font-weight:bold;background-color:white;color:#EC8181;border-style:solid;border-color:white;font-size: 20px">Logout</button>
+    <button type="button" @click="Logout" style="font-weight:bold;background-color:white;color:#EC8181;border-style:solid;border-color:white;font-size: 20px">Logout</button>
   </el-col>
   <el-col :span="2">
     <a href="/login">
@@ -12,11 +12,25 @@
 </template>
 
 <script>
+
+import router from "@/router";
+
 export default {
   name: "LoginLayout",
   methods: {
-    tryLogout() {
-      return
+    Logout() {
+      router.push('/');
+      if (localStorage.code && localStorage.getItem('code') !== '') {
+        localStorage.setItem('code','');
+        window.dispatchEvent(new CustomEvent('code-localstorage-changed', {
+          detail: {
+            storage: localStorage.getItem('code')
+          }
+        }));
+        this.$notify({type:"success", text: "Successfully Logout!"});
+      } else {
+        this.$notify({type:"error", text: "You've Logged out!"});
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 <template>
+  <notifications position="top center"/>
   <el-affix>
     <div id="navbar" style="background-color:white;width: 100%;height:auto;box-shadow: 0 6px 4px -4px rgba(0,0,0,.3)">
       <el-row style="padding-bottom: 12px;padding-top: 10px;padding-left: 50px;padding-right: 50px">
@@ -17,29 +18,35 @@
 <script>
 import NonLoginLayout from "@/components/NonLoginLayout";
 import LoginLayout from "@/components/LoginLayout";
-import UserInfoStore from "@/app/user-info-store";
-import UserInfoApi from "@/app/user-info-api";
-import auth from '@/app/auth';
+
 export default {
   name: "Layout",
+  mounted() {
+    window.addEventListener('code-localstorage-changed', (event) => {
+      this.code = event.detail.storage;
+      console.log(localStorage.getItem('code'));
+      if (this.code !== null && this.code !== '') {
+        this.dyComponent = LoginLayout;
+      } else {
+        this.dyComponent = NonLoginLayout;
+      }
+    });
+  },
   data() {
     return {
       query:'',
-      dyComponent:NonLoginLayout
+      dyComponent:NonLoginLayout,
+      code: ''
     }
 
   },
   methods: {
     checkLogin() {
-      if (!auth.auth.isUserSignedIn()) {
-        UserInfoStore.setLoggedIn(false);
-        this.dyComponent = NonLoginLayout;
-      } else {
-        UserInfoApi.getUserInfo().then(response => {
-          UserInfoStore.setLoggedIn(true);
-          UserInfoStore.setCognitoInfo(response);
-        });
+      if (localStorage.getItem('code') !== null && localStorage.getItem('code') !== '') {
+        console.log(localStorage.getItem('code'));
         this.dyComponent = LoginLayout;
+      } else {
+        this.dyComponent = NonLoginLayout;
       }
     }
   },created() {
