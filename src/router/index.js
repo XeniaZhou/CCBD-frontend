@@ -4,6 +4,7 @@ import Summary from "@/views/Summary";
 import Loggedin from "@/views/Loggedin";
 import Signup from "@/views/Signup";
 import Loggedout from "@/views/Loggedout";
+import Profile from "@/views/Profile";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup
+  },
+  {
+    path: '/me',
+    name:'Profile',
+    component: Profile
   }
 
 ]

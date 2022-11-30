@@ -18,9 +18,20 @@ export default {
   name: "Loggedout",
   methods: {
     Logout() {
-      localStorage.setItem('code', '');
-      router.push({name:'Home'});
-      this.$notify({type:"success", text: "Successfully Logout!"});
+      router.push('/');
+      if (localStorage.code && localStorage.getItem('code') !== '') {
+        localStorage.setItem('code','');
+        localStorage.removeItem('access-token');
+        localStorage.setItem('accessToken', '');
+        window.dispatchEvent(new CustomEvent('code-localstorage-changed', {
+          detail: {
+            storage: localStorage.getItem('code')
+          }
+        }));
+        this.$notify({type:"success", text: "Successfully Logout!"});
+      } else {
+        this.$notify({type:"error", text: "You've Logged out!"});
+      }
     }
   },created() {
     this.Logout();

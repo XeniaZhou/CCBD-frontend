@@ -1,9 +1,11 @@
 <template>
   <el-col :span="2" :offset="10">
-    <button type="button" @click="Logout" class="logout-btn">Logout</button>
+    <a href="https://cu6998final-proj.auth.us-east-1.amazoncognito.com/logout?client_id=69evl2jbv3evf93jr1t8jkkn2t&logout_uri=http://localhost:8080/logout">
+      <button type="button" class="logout-btn">Logout</button>
+    </a>
   </el-col>
   <el-col :span="2">
-    <a href="/login">
+    <a href="/me">
       <button type="button" class="prof-btn">
         <el-icon :size="20" style="height:20px;width:20px;"><User /></el-icon>
       </button>
@@ -13,26 +15,8 @@
 
 <script>
 
-import router from "@/router";
-
 export default {
-  name: "LoginLayout",
-  methods: {
-    Logout() {
-      router.push('/');
-      if (localStorage.code && localStorage.getItem('code') !== '') {
-        localStorage.setItem('code','');
-        window.dispatchEvent(new CustomEvent('code-localstorage-changed', {
-          detail: {
-            storage: localStorage.getItem('code')
-          }
-        }));
-        this.$notify({type:"success", text: "Successfully Logout!"});
-      } else {
-        this.$notify({type:"error", text: "You've Logged out!"});
-      }
-    }
-  }
+  name: "LoginLayout"
 }
 </script>
 
