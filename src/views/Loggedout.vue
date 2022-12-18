@@ -19,13 +19,14 @@ export default {
   methods: {
     Logout() {
       router.push('/');
-      if (localStorage.code && localStorage.getItem('code') !== '') {
-        localStorage.setItem('code','');
-        localStorage.removeItem('access-token');
-        localStorage.setItem('accessToken', '');
-        window.dispatchEvent(new CustomEvent('code-localstorage-changed', {
+      if (localStorage.email && localStorage.getItem('email') !== '') {
+        localStorage.removeItem('email');
+        localStorage.setItem('email', '');
+        localStorage.setItem('username', '');
+        localStorage.setItem('email_verified', '');
+        window.dispatchEvent(new CustomEvent('email-localstorage-changed', {
           detail: {
-            storage: localStorage.getItem('code')
+            storage: localStorage.getItem('email')
           }
         }));
         this.$notify({type:"success", text: "Successfully Logout!"});

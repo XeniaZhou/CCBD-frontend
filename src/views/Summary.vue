@@ -23,7 +23,7 @@
   <el-row style="margin-left: 150px;margin-right: 150px;margin-top:20px">
     <el-col :span="1">
       <button type="button" @mouseover="hovered = true" @mouseleave="hovered = false" @click="markLike" :style="[isLiked || hovered ? {'background-color':'#e7e7e7','border': '#e7e7e7'}:{'background-color':'white','border': 'white'}]" style="padding-top:5px;border-radius: 10px;box-shadow: 0 4px 4px 0 rgba(0,0,0,0.3)">
-        <el-icon :size="20" style="color: #Ec8181"><Star /></el-icon>
+        <el-icon :size="20" style="color: #Ec8181"><StarFilled /></el-icon>
       </button>
       <br>
       <span :style="[isLiked ? {'visibility':'visible'}:{'visibility':'hidden'}]" style="color: #EC8181;">Liked!</span>
@@ -55,7 +55,12 @@ export default {
     },
     readMore() {
 
+    },
+    getSummary() {
+
     }
+  },created() {
+    this.getSummary()
   }
 }
 </script>

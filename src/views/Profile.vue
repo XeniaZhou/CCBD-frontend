@@ -27,11 +27,7 @@
       </el-col>
     </el-row>
     <el-row style="margin-top: 60px">
-      <el-col :span="1" :offset="15">
-        <button type="button" @click="edit" class="edit-btn">Edit
-        </button>
-      </el-col>
-      <el-col :span="3">
+      <el-col :span="3" :offset="16">
         <a href="/">
           <button type="button" class="back-btn">
             Back
@@ -46,6 +42,7 @@
 
 <script>
 import {stringifyQuery} from "vue-router";
+import router from "@/router";
 export default {
   name: "Profile",
   data(){
@@ -57,68 +54,16 @@ export default {
   },
   methods:{
     getInfo() {
-      const userinfo_url = 'https://cu6998final-proj.auth.us-east-1.amazoncognito.com/oauth2/userInfo';
-      if (localStorage.accessToken && localStorage.getItem('accessToken') !== '') {
-        let requestData2 = {
-          headers: {
-            'Authorization': 'Bearer '+ localStorage.getItem('accessToken')
-          }
-        }
-        this.$axios.get(userinfo_url, requestData2).then(response => {
-          console.log(response.data);
-          this.username = response.data.username;
-          this.email = response.data.email;
-          this.email_verified = response.data.email_verified;
-        });
-      } else {
-        let token_url = 'https://cu6998final-proj.auth.us-east-1.amazoncognito.com/oauth2/token';
-        // let auth = 'Basic '+window.btoa('69evl2jbv3evf93jr1t8jkkn2t'+':'+'1unhu1agc23cu367rk1lqkkt98o5ccfbkeh0ddg426m0oe6a4d3i')
-        // console.log(window.btoa('69evl2jbv3evf93jr1t8jkkn2t'+':'+'1unhu1agc23cu367rk1lqkkt98o5ccfbkeh0ddg426m0oe6a4d3i'))
-        // let client_id = '69evl2jbv3evf93jr1t8jkkn2t';
-        // let code = localStorage.getItem('code');
-        // let redirect_uri = 'http://localhost:8080/login';
-        let requestData = {
-          headers: {
-            //'Authorization': 'Basic '+ window.btoa('69evl2jbv3evf93jr1t8jkkn2t'+':'+'1unhu1agc23cu367rk1lqkkt98o5ccfbkeh0ddg426m0oe6a4d3i'),
-            'Content-Type':'application/x-www-form-urlencoded; charset=utf-8'
-          }
-        }
-        console.log(localStorage.getItem('code'));
-        let params = {
-          "grant_type": "authorization_code",
-          "client_id": '69evl2jbv3evf93jr1t8jkkn2t',
-          "client_secret": '1unhu1agc23cu367rk1lqkkt98o5ccfbkeh0ddg426m0oe6a4d3i',
-          "code": localStorage.getItem('code'),
-          "redirect_uri": 'http://localhost:8080/login'
-        }
-        let data = stringifyQuery(params);
-        console.log(data);
-        this.$axios.post(token_url, data, requestData)
-            .then(res => {
-              console.log(res)
-              let token = res.data.access_token;
-              localStorage.setItem('accessToken', res.data.access_token);
-              let requestData2 = {
-                headers: {
-                  'Authorization': 'Bearer '+ token
-                }
-              }
-              this.$axios.get(userinfo_url, requestData2).then(response => {
-                console.log(response.data);
-                this.username = response.data.username;
-                this.email = response.data.email;
-                this.email_verified = response.data.email_verified;
-              });
+      if (localStorage.email && localStorage.getItem('email') !== '') {
 
-            })
-            .catch(err => {
-              console.log('Error: ', err.message);
-            });
+          this.username = localStorage.getItem('username');
+          this.email = localStorage.getItem('email');
+          this.email_verified = localStorage.getItem('email_verified');
+      } else {
+          router.push('/');
+          this.$notify({type:"error", text: "Please Login First!"})
       }
 
-
-    },
-    edit() {
 
     }
   },created() {
@@ -128,18 +73,18 @@ export default {
 </script>
 
 <style scoped>
-.edit-btn {
-  font-weight:normal;
-  background-color:white;
-  color: #8f8f8f;
-  border-style:solid;
-  border-color:white;
-  font-size: 20px;
-  padding-top: 3px;
-}
-.edit-btn:hover {
-  color:dimgrey;
-}
+/*.edit-btn {*/
+/*  font-weight:normal;*/
+/*  background-color:white;*/
+/*  color: #8f8f8f;*/
+/*  border-style:solid;*/
+/*  border-color:white;*/
+/*  font-size: 20px;*/
+/*  padding-top: 3px;*/
+/*}*/
+/*.edit-btn:hover {*/
+/*  color:dimgrey;*/
+/*}*/
 
 .back-btn {
   padding-right:15px;

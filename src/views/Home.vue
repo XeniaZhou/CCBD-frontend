@@ -32,9 +32,9 @@ import NonLoginHome from "@/components/NonLoginHome";
 export default {
   name: 'Home',
   mounted() {
-    window.addEventListener('code-localstorage-changed', (event) => {
-      let code = event.detail.storage;
-      if (code !== null && code !== '') {
+    window.addEventListener('email-localstorage-changed', (event) => {
+      let email = event.detail.storage;
+      if (email !== null && email !== '') {
         this.dyComponent = LoginHome;
         this.isLogin = true;
       } else {
@@ -52,6 +52,48 @@ export default {
   },
   methods: {
     gatherSummaries() {
+      // if (this.isLogin) {
+      //   let recommended_url = 'the api gw endpoint - recommended'
+      //   let param = {
+      //     'email': localStorage.getItem('email')
+      //   }
+      //   this.$axios.get(recommended_url, param).then(res => {
+      //           console.log(res);
+      //           let data = res.data;
+      //           for (let i = 0; i < data.length; i++) {
+      //             this.summaries.push({
+      //               title: data[i].title,
+      //               id: data[i].title,
+      //               tags: data[i].tags
+      //             });
+      //           }
+      //       })
+      //
+      //            // ideal structure {username, id, image_url}
+      //       .catch(err => {
+      //            console.log('err');
+      //            console.log('Error: ', err.message);
+      //       });
+      // } else {
+      //   let trending_url = 'the api gw endpoint - trending'
+      //   this.$axios.get(trending_url).then(res => {
+      //     console.log(res);
+      //     let data = res.data;
+      //     for (let i = 0; i < data.length; i++) {
+      //       this.summaries.push({
+      //         title: data[i].title,
+      //         id: data[i].title,
+      //         tags: data[i].tags
+      //       });
+      //     }
+      //   })
+      //
+      //       // ideal structure {username, id, image_url}
+      //       .catch(err => {
+      //         console.log('err');
+      //         console.log('Error: ', err.message);
+      //       });
+      // }
       this.summaries.push({title:'Google Fiber is launching 5-gig and 8-gig plans early next year',
                             id:'example1',
                           tags:['tag1','tag2']});
@@ -60,7 +102,7 @@ export default {
       router.push({name:'Summary', params: {id: id}})
     },
     checkLogin() {
-      if (localStorage.getItem('code') !== null && localStorage.getItem('code') !== '') {
+      if (localStorage.getItem('email') !== null && localStorage.getItem('email') !== '') {
         this.isLogin = true;
         this.dyComponent = LoginHome;
       } else {

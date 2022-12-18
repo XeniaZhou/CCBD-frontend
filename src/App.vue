@@ -22,10 +22,10 @@ import LoginLayout from "@/components/LoginLayout";
 export default {
   name: "Layout",
   mounted() {
-    window.addEventListener('code-localstorage-changed', (event) => {
-      this.code = event.detail.storage;
-      console.log(localStorage.getItem('code'));
-      if (this.code !== null && this.code !== '') {
+    window.addEventListener('email-localstorage-changed', (event) => {
+      this.email = event.detail.storage;
+      console.log(localStorage.getItem('email'));
+      if (this.email !== null && this.email !== '') {
         this.dyComponent = LoginLayout;
       } else {
         this.dyComponent = NonLoginLayout;
@@ -36,14 +36,14 @@ export default {
     return {
       query:'',
       dyComponent:NonLoginLayout,
-      code: ''
+      email: ''
     }
 
   },
   methods: {
     checkLogin() {
-      if (localStorage.getItem('code') !== null && localStorage.getItem('code') !== '') {
-        console.log(localStorage.getItem('code'));
+      if (localStorage.getItem('email') !== null && localStorage.getItem('email') !== '') {
+        console.log(localStorage.getItem('email'));
         this.dyComponent = LoginLayout;
       } else {
         this.dyComponent = NonLoginLayout;
