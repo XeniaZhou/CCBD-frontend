@@ -26,6 +26,7 @@
 
 <script>
 // @ is an alias to /src
+import API_BASE_URL from "@/api";
 import router from "@/router";
 import LoginHome from "@/components/LoginHome";
 import NonLoginHome from "@/components/NonLoginHome";
@@ -52,51 +53,63 @@ export default {
   },
   methods: {
     gatherSummaries() {
-      // if (this.isLogin) {
-      //   let recommended_url = 'the api gw endpoint - recommended'
-      //   let param = {
-      //     'email': localStorage.getItem('email')
-      //   }
-      //   this.$axios.get(recommended_url, param).then(res => {
-      //           console.log(res);
-      //           let data = res.data;
-      //           for (let i = 0; i < data.length; i++) {
-      //             this.summaries.push({
-      //               title: data[i].title,
-      //               id: data[i].title,
-      //               tags: data[i].tags
-      //             });
-      //           }
-      //       })
-      //
-      //            // ideal structure {username, id, image_url}
-      //       .catch(err => {
-      //            console.log('err');
-      //            console.log('Error: ', err.message);
-      //       });
-      // } else {
-      //   let trending_url = 'the api gw endpoint - trending'
-      //   this.$axios.get(trending_url).then(res => {
-      //     console.log(res);
-      //     let data = res.data;
-      //     for (let i = 0; i < data.length; i++) {
-      //       this.summaries.push({
-      //         title: data[i].title,
-      //         id: data[i].title,
-      //         tags: data[i].tags
-      //       });
-      //     }
-      //   })
-      //
-      //       // ideal structure {username, id, image_url}
-      //       .catch(err => {
-      //         console.log('err');
-      //         console.log('Error: ', err.message);
-      //       });
-      // }
-      this.summaries.push({title:'Google Fiber is launching 5-gig and 8-gig plans early next year',
-                            id:'example1',
-                          tags:['tag1','tag2']});
+      if (this.isLogin) {
+        console.log('recommended..')
+        let recommended_url = API_BASE_URL + '/recommend'
+
+        let userid = 'none2'
+        if (localStorage.getItem('email') !== null && localStorage.getItem('email') !== '') {
+          userid = localStorage.getItem('email');
+        }
+
+        this.$axios.get(recommended_url, {
+          headers: {
+            'userid': userid
+          }
+        }).then(res => {
+                console.log(res);
+                let data = res.data.results;
+                for (let i = 0; i < data.length; i++) {
+                  this.summaries.push({
+                    title: data[i].title,
+                    id: data[i].key,
+                    tags: data[i].tags
+                  });
+                }
+            })
+      
+                 // ideal structure {username, id, image_url}
+            .catch(err => {
+                 console.log('err');
+                 console.log('Error: ', err.message);
+            });
+      } else {
+        console.log('trending...')
+        let trending_url = API_BASE_URL + '/trending'
+        this.$axios.get(trending_url).then(res => {
+          console.log(res);
+          let data = res.data.results;
+          for (let i = 0; i < data.length; i++) {
+            this.summaries.push({
+              title: data[i].title,
+              id: data[i].key,
+              tags: data[i].tags
+            });
+          }
+        })
+      
+            // ideal structure {username, id, image_url}
+            .catch(err => {
+              console.log('err');
+              console.log('Error: ', err.message);
+            });
+      }
+
+      // this.summaries.push({
+      //   title:'Google Fiber is launching 5-gig and 8-gig plan',
+      //   id:'example1',
+      //   tags:['tag1','tag2']
+      // });
     },
     goToSummary(id) {
       router.push({name:'Summary', params: {id: id}})

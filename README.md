@@ -1,5 +1,8 @@
 # demo
 
+## Temporary Endpoint
+https://d24o7580b1nd6r.cloudfront.net/
+
 ## Project setup
 ```
 npm install

@@ -37,30 +37,84 @@
 </template>
 
 <script>
+import API_BASE_URL from "@/api";
+
 export default {
   name: "Summary",
   data() {
     return {
       hovered: false,
       isLiked: false,
-      title:'Google Fiber is launching 5-gig and 8-gig plans early next year',
-      tags:['tag1','tag2'],
+      title:'',
+      tags:[],
       link:'',
-      summary:'Google Fiber will offer 5Gbps and 8Gbps tiers starting in early 2023. Both tiers will come with a Wi-Fi 6 router and up to two mesh extenders with professional installation. The 5Gbps tier will cost $125 per month while the 8Gbps tier will cost $150 per month. Google Fiber customers in Utah, Kansas City, or West Des Moines may be able to try out the new tiers as early as next month.'
+      summary:''
     }
   },
   methods: {
     markLike() {
+      if (this.isLiked) {
+        console.log('dislike..')
+        this.markHistory('dislike')
+      } else {
+        console.log('like...')
+        this.markHistory('like')
+      }
       this.isLiked = !this.isLiked;
     },
     readMore() {
+      console.log('read more..')
+      this.markHistory('readmore')
 
+      window.open(this.link, '_blank')
     },
     getSummary() {
+      console.log('summary...')
+      let summary_url = API_BASE_URL + '/summary'
+      let param = {
+          'key': this.$route.params.id
+      }
 
+      this.$axios.get(summary_url, {params: param}).then(res => {
+        console.log(res);
+        let data = res.data;
+        this.title = data.title
+        this.tags = data.tags
+        this.isLiked = data.liked
+        this.link = data.source
+        this.summary = data.text
+      })
+
+          // ideal structure {username, id, image_url}
+          .catch(err => {
+            console.log('err');
+            console.log('Error: ', err.message);
+          });
+    },
+    markHistory(event) {
+      console.log('history..')
+      let history_url = API_BASE_URL + '/history'
+      let userid = 'none'
+      if (localStorage.getItem('email') !== null && localStorage.getItem('email') !== '') {
+        userid = localStorage.getItem('email');
+      }
+
+      this.$axios.post(history_url, {
+        'key': this.$route.params.id,
+        'event': event
+      }, {
+        headers: {'userid': userid}
+      }).then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+            console.log('err');
+            console.log('Error: ', err.message);
+          });
     }
   },created() {
     this.getSummary()
+    this.markHistory('read')
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <el-col :span="2" :offset="12">
-    <a href="https://cu6998final-proj.auth.us-east-1.amazoncognito.com/login?client_id=69evl2jbv3evf93jr1t8jkkn2t&response_type=code&scope=email+openid&redirect_uri=http://localhost:8080/login">
+    <a href="https://cu6998final-proj.auth.us-east-1.amazoncognito.com/login?client_id=69evl2jbv3evf93jr1t8jkkn2t&response_type=code&scope=email+openid&redirect_uri=https://d24o7580b1nd6r.cloudfront.net/login">
       <button type="button" class="login-btn">Login</button>
     </a>
   </el-col>

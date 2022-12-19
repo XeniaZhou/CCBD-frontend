@@ -39,7 +39,7 @@ export default {
         "client_id": '69evl2jbv3evf93jr1t8jkkn2t',
         "client_secret": '1unhu1agc23cu367rk1lqkkt98o5ccfbkeh0ddg426m0oe6a4d3i',
         "code": code,
-        "redirect_uri": 'http://localhost:8080/login'
+        "redirect_uri": 'https://d24o7580b1nd6r.cloudfront.net/login'
       }
       let data = stringifyQuery(params);
       console.log(data);
