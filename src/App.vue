@@ -4,7 +4,7 @@
     <div id="navbar" style="background-color:white;width: 100%;height:auto;box-shadow: 0 6px 4px -4px rgba(0,0,0,.3)">
       <el-row style="padding-bottom: 12px;padding-top: 10px;padding-left: 50px;padding-right: 50px">
         <el-col :span="10">
-          <el-input v-model="query" placeholder="Search" style="font-size:20px;height:30px"/>
+          <!-- <el-input v-model="query" placeholder="Search" style="font-size:20px;height:30px"/> -->
         </el-col>
         <component :is=dyComponent></component>
       </el-row>

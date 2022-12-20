@@ -75,7 +75,12 @@ export default {
           'key': this.$route.params.id
       }
 
-      this.$axios.get(summary_url, {params: param}).then(res => {
+      let userid = 'none'
+      if (localStorage.getItem('email') !== null && localStorage.getItem('email') !== '') {
+        userid = localStorage.getItem('email');
+      }
+
+      this.$axios.get(summary_url, {params: param, headers: {'userid': userid}}).then(res => {
         console.log(res);
         let data = res.data;
         this.title = data.title
